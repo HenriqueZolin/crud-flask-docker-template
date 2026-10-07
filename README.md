@@ -45,6 +45,20 @@ curl localhost:8111/healthz
 > Use `PORT` se a 8080 já estiver ocupada na sua máquina — dentro do container
 > continua 8080, que é o que o contrato exige.
 
+Repo limpo e o remote já está configurado. Os dois comandos:
+
+Loop rápido — a cada edição (~0,1s, sem Docker)
+```bash
+# terminal 1
+PORT=8111 python3 src/app.py
+
+# terminal 2
+BASE_URL=http://localhost:8111 REPO_SLUG=prova-escolati-2026 \
+  python3 -m pytest tests/public -q
+Loop real — a cada commit (é o que o professor roda)
+bash scripts/rodar_testes.sh
+```
+
 ## Rodar em container
 
 ```bash
