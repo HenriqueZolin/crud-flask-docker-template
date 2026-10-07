@@ -1,0 +1,65 @@
+===============================================================================
+PROMPT 2 — PEDIDOS POR ETAPA
+Mandar um por vez, DEPOIS do prompt de contexto. Um pedido = um commit.
+===============================================================================
+
+--- 1) infra -----------------------------------------------------------------
+
+Gere o Dockerfile e o requirements.txt. Inclua EXPOSE 8080.
+
+
+--- 2) o gate ----------------------------------------------------------------
+
+Gere o src/app.py com APENAS o /healthz — quero validar que o container sobe
+antes de escrever o resto.
+
+  (Por que isolar: enquanto /healthz nao responder 200 a suite nem comeca, e
+   TODOS os testes falham por timeout. Container verde no minuto 5 transforma
+   todo o resto em iteracao sobre algo que ja funciona.)
+
+
+--- 3) endpoints, um por vez -------------------------------------------------
+
+Agora adicione o endpoint {{METODO + PATH}}. O contrato diz:
+
+{{COLE O TRECHO DO ENDPOINT}}
+
+Me de so as funcoes novas, nao o arquivo inteiro.
+
+
+--- 4) frontend (se o contrato pedir) ----------------------------------------
+
+Gere o public/index.html. Requisitos do contrato:
+
+{{COLE O BLOCO frontend}}
+
+HTML + fetch puro. Me diga tambem que linha adicionar no Dockerfile e no
+app.py para servir isso na rota /.
+
+
+--- 5) debug -----------------------------------------------------------------
+
+Este teste falhou:
+
+{{COLE A SAIDA DO PYTEST}}
+
+Funcao relevante:
+
+{{COLE A FUNCAO}}
+
+Qual e a causa?
+
+
+===============================================================================
+NOTAS
+===============================================================================
+
+- Cole o contrato INTEIRO, nunca resumido. Nome de campo e status code errados
+  sao falha byte a byte, e e exatamente isso que um resumo perde.
+
+- Compartilhe a conversa publicamente e registre o link no FONTES.md como
+  linha numerada de tabela:  | 1 | URL | o que usou | onde aparece |
+  Link em texto corrido normalmente NAO conta.
+
+- Nao aceite codigo que voce nao saiba explicar. Costuma ser exigido que o
+  aluno explique qualquer trecho do proprio entregavel.

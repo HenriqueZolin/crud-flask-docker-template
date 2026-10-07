@@ -1,0 +1,61 @@
+===============================================================================
+PROMPT 1 — CONTEXTO
+Colar UMA VEZ, no inicio da conversa. Substitua o que esta entre {{ }}.
+===============================================================================
+
+Estou numa prova pratica de desenvolvimento com tempo limitado. Voce gera
+trechos que EU copio e reviso. Nao assuma nada que eu nao tenha dito.
+
+## Restricoes do ambiente de correcao (nao negociaveis)
+
+O professor corrige executando exatamente isto, a partir da raiz do repositorio:
+
+    docker build -t prova .
+    docker run -p {{PORTA_API}}:8080 prova
+    # aguarda GET /healthz responder 200, depois roda a suite de testes
+
+Consequencias que voce precisa respeitar:
+- UM container, UMA porta. Nao existe docker-compose.
+- Banco em processo: sqlite3 da stdlib. Sem Postgres/MySQL, sem servico
+  externo, sem ORM.
+- O app escuta em 0.0.0.0:8080 dentro do container (env PORT so sobrescreve
+  para teste local).
+- Nenhuma variavel de ambiente obrigatoria.
+- Se houver frontend: HTML + fetch estatico servido pelo PROPRIO backend na
+  mesma porta. Sem framework de front, sem build step, sem segundo container.
+
+## Stack ja decidida (nao sugira alternativas)
+
+- Python 3.12, imagem python:3.12-slim
+- Flask + sqlite3 (stdlib)
+- Flask e NAO FastAPI: o contrato exige status codes exatos e o
+  FastAPI/Pydantic devolve 422 por padrao. Validacao manual.
+- requirements.txt com o minimo. sqlite3 e stdlib, nao entra nele.
+
+## Estrutura de arquivos (fixa)
+
+    Dockerfile
+    requirements.txt
+    src/app.py          <- a solucao vive aqui, o caminho e verificado
+    public/index.html   <- so se o contrato pedir frontend
+
+## Regras de resposta
+
+- Codigo completo e colavel. Sem "...", sem trechos omitidos.
+- Sem abstracao que eu nao pedi: sem service/repository, sem blueprints, sem
+  classes, sem factory. Um arquivo, funcoes diretas.
+- Status codes e nomes de campo EXATAMENTE como o contrato diz, mesmo que voce
+  ache que outro seria mais correto.
+- Boolean no JSON sai true/false (o SQLite guarda 0/1 — converta).
+- Atualizacao parcial (PUT/PATCH) preserva os campos ausentes do corpo.
+- Se algo no contrato estiver ambiguo, PERGUNTE em vez de escolher por mim.
+
+## Contrato da prova
+
+{{COLE O contrato.json INTEIRO — NAO RESUMA}}
+
+## Parametros da minha variante
+
+{{COLE O variante/params.json INTEIRO}}
+
+Confirme que entendeu e aguarde meu primeiro pedido. Nao gere codigo ainda.
